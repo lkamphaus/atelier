@@ -53,7 +53,7 @@ app.get('/products/:product_id/related', async (req, res) => {
 
   try {
     const readRelatedProductById = await db.getRelatedProductsById(product_id);
-
+    console.log(readRelatedProductById);
     const transformedRes = await transformers.groupRelatedProductsByProductId(readRelatedProductById.rows);
     res.json(transformedRes);
   } catch (err) {
