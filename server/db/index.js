@@ -7,9 +7,36 @@ client
   .then(() => console.log('connected'))
   .catch(err => console.error('connection error', err.stack));
 
+//products
+const getProducts = async (page, count) => {
+  let pageCalc;
+
+  if (!page) {
+    pageCalc = 1
+  } else {
+    pageCalc = count > 100 ? 100 : (count * page) - count;
+  }
+
+  if (!count) {
+    count = 5;
+  }
+
+  const getProducts = `SELECT *
+                      FROM product_info
+                      LIMIT $1
+                      OFFSET $2`;
+  try {
+    const res = await client.query(getProducts, [count, pageCalc]);
+    console.log('res', res)
+    await client.end();
+    return res;
+  } catch(err) {
+    console.log(err.stack)
+  }
+};
+
 //product info
 const getProductsById = async (id) => {
-  console.log('id2', id)
   const getProducts = `SELECT
                         product_info.id,
                         name,
@@ -37,26 +64,28 @@ const getProductsById = async (id) => {
 //product styles
 const getProductsStylesById = async (id) => {
   const getProductStyles = `SELECT
-                            product_styles.id,
-                            product_id,
-                            name,
-                            sale_price,
-                            original_price,
-                            default_style,
-                            thumbnail_url,
-                            url,
-                            size,
-                            quantity
-                          FROM product_styles
-                          LEFT JOIN style_photos
-                          ON style_id = product_styles.id
-                          INNER JOIN style_skus
-                          ON style_skus.style_id = product_styles.id
-                          WHERE product_styles.id = $1;`;
+                              product_styles.id,
+                              product_id,
+                              name,
+                              sale_price,
+                              original_price,
+                              default_style,
+                              thumbnail_url,
+                              url,
+                              style.skus.id,
+                              size,
+                              quantity
+                            FROM product_styles
+                            LEFT JOIN style_photos
+                            ON style_id = product_styles.id
+                            LEFT JOIN style_skus
+                            ON style_skus.style_id = product_styles.id
+                            WHERE product_styles.product_id = $1;`;
   try {
     const res = await client.query(getProductStyles, [id]);
     console.log('res', res)
     await client.end();
+    return res;
   } catch(err) {
     console.log(err.stack)
   }
@@ -72,13 +101,14 @@ const getRelatedProductsById = async (id) => {
   try {
     const res = await client.query(getRelatedProducts, [id]);
     await client.end();
-    console.log(res.rows[0])
+    return res;
   } catch(err) {
     console.log(err.stack)
   }
 };
 
 module.exports = {
+  getProducts,
   getProductsById,
   getProductsStylesById,
   getRelatedProductsById
