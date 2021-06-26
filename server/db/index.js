@@ -27,7 +27,6 @@ const getProducts = async (page, count) => {
                       OFFSET $2`;
   try {
     const res = await client.query(getProducts, [count, pageCalc]);
-    console.log('res', res)
     // await client.end();
     return res;
   } catch(err) {
@@ -52,7 +51,6 @@ const getProductsById = async (id) => {
                       WHERE product_info.id = $1;`;
   try {
     const res = await client.query(getProducts, [id]);
-    console.log('res', res)
     // await client.end();
     return res;
   } catch(err) {
@@ -83,7 +81,6 @@ const getProductsStylesById = async (id) => {
                             WHERE product_styles.product_id = $1;`;
   try {
     const res = await client.query(getProductStyles, [id]);
-    console.log('res', res)
     // await client.end();
     return res;
   } catch(err) {
