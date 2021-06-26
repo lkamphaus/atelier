@@ -3,10 +3,14 @@ const db = require('../server/db');
 const transformers = require('../server/transformers');
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get('/', async (req, res) => {
+  res.status(200).send('hi');
+});
+
 
 app.get('/products', async (req, res) => {
   const { page, count } = req.query;
@@ -40,6 +44,7 @@ app.get('/products/:product_id/styles', async (req, res) => {
   try {
     const readProductStyleById = await db.getProductsStylesById(product_id);
     const transformedRes = await transformers.groupStylesByProductId(readProductStyleById.rows);
+    res.status(200);
     res.json(transformedRes);
   } catch (err) {
     console.log(err.stack);
@@ -62,6 +67,4 @@ app.get('/products/:product_id/related', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`);
-});
+module.exports = app;

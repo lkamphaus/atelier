@@ -1,4 +1,4 @@
-const { Pool, Client } = require('pg');
+const { Client } = require('pg');
 const pgConfig = require('./config.js');
 
 const client = new Client(pgConfig);
@@ -28,7 +28,7 @@ const getProducts = async (page, count) => {
   try {
     const res = await client.query(getProducts, [count, pageCalc]);
     console.log('res', res)
-    await client.end();
+    // await client.end();
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -53,7 +53,7 @@ const getProductsById = async (id) => {
   try {
     const res = await client.query(getProducts, [id]);
     console.log('res', res)
-    await client.end();
+    // await client.end();
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -72,7 +72,7 @@ const getProductsStylesById = async (id) => {
                               default_style,
                               thumbnail_url,
                               url,
-                              style.skus.id,
+                              style_skus.id,
                               size,
                               quantity
                             FROM product_styles
@@ -84,7 +84,7 @@ const getProductsStylesById = async (id) => {
   try {
     const res = await client.query(getProductStyles, [id]);
     console.log('res', res)
-    await client.end();
+    // await client.end();
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -100,7 +100,7 @@ const getRelatedProductsById = async (id) => {
                               WHERE product_id = $1;`;
   try {
     const res = await client.query(getRelatedProducts, [id]);
-    await client.end();
+    // await client.end();
     return res;
   } catch(err) {
     console.log(err.stack)
