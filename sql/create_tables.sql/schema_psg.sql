@@ -61,3 +61,14 @@ CREATE TABLE product_features (
     foreign key (product_id)
       references product_info(id)
 );
+
+
+CREATE INDEX ON product_features USING HASH (product_id);
+
+CREATE INDEX ON style_photos USING HASH (style_id);
+
+CREATE INDEX ON style_skus USING HASH (style_id);
+
+CREATE INDEX ON product_styles USING HASH (product_id);
+
+CREATE INDEX ON related_products USING HASH (product_id);

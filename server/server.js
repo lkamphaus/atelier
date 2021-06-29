@@ -1,4 +1,4 @@
-const app = require('./index.js')
+const app = require('./index.js');
 
 const PORT = 3000;
 

@@ -1,5 +1,10 @@
 const app = require('../index.js');
+const db = require('.././db/index.js');
 const supertest = require('supertest');
+
+beforeAll(done => {
+  done()
+})
 
 describe('/products', () => {
    it('Products endpoint should respond with 200 status code', async () => {
@@ -33,6 +38,11 @@ describe('/products/:product_id/related', () => {
     expect(response.statusCode).toBe(200);
   });
 });
+
+afterAll(done => {
+  db.client.end()
+  done()
+})
 
 
 // it('Product styles endpoint should respond with 200 status code', async () => {
