@@ -16,13 +16,3 @@ services:
           - ./postgres-data:/var/lib/postgresql/data
           # copy the sql script to create tables
           - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-    web-server:
-        build: .
-        environment:
-          - POSTGRES_URL="${DB_URL}"
-        ports:
-          - '3000:3000'
-        depends_on:
-          - "postgres"
-        links:
-          - "postgres"

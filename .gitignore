@@ -6,4 +6,6 @@ related.csv
 skus.csv
 styles.csv
 node_modules/
-config.env
+.env
+newrelic.js
+
