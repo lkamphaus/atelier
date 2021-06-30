@@ -40,7 +40,7 @@ describe('/products/:product_id/related', () => {
 });
 
 afterAll(done => {
-  db.client.end()
+  db.pool.end()
   done()
 })
 

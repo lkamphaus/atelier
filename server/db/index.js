@@ -1,11 +1,26 @@
-const { Client } = require('pg');
+const { Client, Pool } = require('pg');
 const pgConfig = require('./connection.js');
 
-const client = new Client(pgConfig.uri);
-client
-  .connect()
-  .then(() => console.log('connected'))
-  .catch(err => console.error('connection error', err.stack));
+
+// const client = new Client(pgConfig.uri);
+
+
+const connectionString = pgConfig.uri
+
+const pool = new Pool({
+  connectionString,
+});
+
+(async function() {
+  try {
+    const client = await pool.connect();
+    const res = await (console.log('Connected to DB!'));
+    await client.query('SELECT NOW()')
+    client.release()
+  } catch (err) {
+    console.log(console.log(err.stack));
+  }
+})()
 
 //products
 const getProducts = async (page, count) => {
@@ -26,8 +41,7 @@ const getProducts = async (page, count) => {
                       LIMIT $1
                       OFFSET $2`;
   try {
-    const res = await client.query(getProducts, [count, pageCalc]);
-    // await client.end();
+    const res = await pool.query(getProducts, [count, pageCalc]);
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -50,8 +64,7 @@ const getProductsById = async (id) => {
                       ON product_info.id = product_features.product_id
                       WHERE product_info.id = $1;`;
   try {
-    const res = await client.query(getProducts, [id]);
-    // await client.end();
+    const res = await pool.query(getProducts, [id]);
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -79,8 +92,7 @@ const getProductsStylesById = async (id) => {
                             ON product_styles.id = style_skus.style_id
                             WHERE product_styles.product_id = $1;`;
   try {
-    const res = await client.query(getProductStyles, [id]);
-    // await client.end();
+    const res = await pool.query(getProductStyles, [id]);
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -95,8 +107,7 @@ const getRelatedProductsById = async (id) => {
                               FROM related_products
                               WHERE product_id = $1;`;
   try {
-    const res = await client.query(getRelatedProducts, [id]);
-    // await client.end();
+    const res = await pool.query(getRelatedProducts, [id]);
     return res;
   } catch(err) {
     console.log(err.stack)
@@ -104,7 +115,7 @@ const getRelatedProductsById = async (id) => {
 };
 
 module.exports = {
-  client,
+  pool,
   getProducts,
   getProductsById,
   getProductsStylesById,
