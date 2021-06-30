@@ -1,6 +1,6 @@
 const app = require('./index.js');
 
-const PORT = 3000;
+const PORT = 80;
 
 app.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);

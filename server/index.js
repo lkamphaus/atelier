@@ -7,8 +7,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', async (req, res) => {
-  res.status(200).send('hi');
+app.get('/loaderio-701d26ac41174fd00b62d7bb536c003a.txt', async (req, res) => {
+  res.send('loaderio-701d26ac41174fd00b62d7bb536c003a');
 });
 
 
