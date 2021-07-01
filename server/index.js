@@ -7,8 +7,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/loaderio-701d26ac41174fd00b62d7bb536c003a.txt', async (req, res) => {
-  res.send('loaderio-701d26ac41174fd00b62d7bb536c003a');
+app.get('/loaderio-38421adb8677f6d7dbe1058b2a9aecdf.txt', async (req, res) => {
+  res.send('loaderio-38421adb8677f6d7dbe1058b2a9aecdf');
 });
 
 
@@ -58,7 +58,6 @@ app.get('/products/:product_id/related', async (req, res) => {
 
   try {
     const readRelatedProductById = await db.getRelatedProductsById(product_id);
-    console.log(readRelatedProductById);
     const transformedRes = await transformers.groupRelatedProductsByProductId(readRelatedProductById.rows);
     res.json(transformedRes);
   } catch (err) {
