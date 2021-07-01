@@ -18,7 +18,6 @@ const pool = new Pool(config);
 
 //products
 const getProducts = async (page, count) => {
-  const client = await pool.connect();
   let res;
 
   let pageCalc;
@@ -38,20 +37,16 @@ const getProducts = async (page, count) => {
                       LIMIT $1
                       OFFSET $2`;
   try {
-    try {
-      res = await client.query(getProducts, [count, pageCalc]);
-    } catch(err) {
-      console.log(err.stack)
-    }
-  } finally {
-    client.release();
+    res = await pool.query(getProducts, [count, pageCalc]);
+  } catch(err) {
+    console.log(err.stack)
   }
+
   return res;
 };
 
 //product info
 const getProductsById = async (id) => {
-  const client = await pool.connect();
   let res;
   const getProducts = `SELECT
                         product_info.id,
@@ -67,20 +62,15 @@ const getProductsById = async (id) => {
                       ON product_info.id = product_features.product_id
                       WHERE product_info.id = $1;`;
   try {
-    try {
-      res = await pool.query(getProducts, [id]);
-    } catch(err) {
-      console.log(err.stack)
-    }
-  } finally {
-    client.release()
+    res = await pool.query(getProducts, [id]);
+  } catch(err) {
+    console.log(err.stack)
   }
   return res;
 };
 
 //product styles
 const getProductsStylesById = async (id) => {
-  const client = await pool.connect();
   let res;
   const getProductStyles = `SELECT
                               product_styles.id,
@@ -101,35 +91,28 @@ const getProductsStylesById = async (id) => {
                             ON product_styles.id = style_skus.style_id
                             WHERE product_styles.product_id = $1;`;
   try {
-    try {
-      res = await pool.query(getProductStyles, [id]);
-    } catch(err) {
-      console.log(err.stack)
-    }
-  } finally {
-    client.release();
+    res = await pool.query(getProductStyles, [id]);
+  } catch(err) {
+    console.log(err.stack)
   }
   return res;
 };
 
 //related products
 const getRelatedProductsById = async (id) => {
-  const client = await pool.connect();
   let res;
   const getRelatedProducts = `SELECT
                                 related_products.product_id,
                                 related_id
                               FROM related_products
                               WHERE product_id = $1;`;
+
   try {
-    try {
-      res = await pool.query(getRelatedProducts, [id]);
-    } catch(err) {
-      console.log(err.stack)
-    }
-  } finally {
-    client.release();
+    res = await pool.query(getRelatedProducts, [id]);
+  } catch(err) {
+    console.log(err.stack)
   }
+
   return res;
 };
 
