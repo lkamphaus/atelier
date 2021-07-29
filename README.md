@@ -10,14 +10,17 @@
 
 ### Optimizations
 * Seeded a PostgreSQL database with over 10 million records
-* Optimized raw SQL query execution times to average < 1ms per query using hash indexes, joins and PostgreSQL JSON functions
-* Improved throughput from around 200 requests per second to 2000 requests per second with low latency and < 1% error rate by horizontally scaling with multiple AWS servers and a load balancer
+* Optimized raw SQL query execution times to average < 4ms per query using hash indexes and joins
+* Improved throughput from around 100 requests per second to 2400 requests per second with low latency and < 1% error rate by horizontally scaling with multiple AWS servers and Nginx's load balancer
 
 
 ### General Info
 Atelier is a project that aimed to optimize the performance of an outdated back-end service to support increasing production traffic. Our team transformed a single service application into a multiservice architecture using micro services. 
 
 ### ✨ Demo
+
+![Product Performance](atelier/Screen Shot 2021-07-29 at 1.56.54 PM.png)
+![Related Product Performance](atelier/Screen Shot 2021-07-27 at 11.32.53 AM.png)
 
 ### 🧪 Technologies
 * Express : Version 4.17.1,
