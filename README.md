@@ -19,8 +19,8 @@ Atelier is a project that aimed to optimize the performance of an outdated back-
 
 ### ✨ Demo
 
-![Product Performance](atelier/Screen Shot 2021-07-29 at 1.56.54 PM.png)
-![Related Product Performance](atelier/Screen Shot 2021-07-27 at 11.32.53 AM.png)
+![Product Performance](Screen Shot 2021-07-29 at 1.56.54 PM.png)
+![Related Product Performance](Screen Shot 2021-07-27 at 11.32.53 AM.png)
 
 ### 🧪 Technologies
 * Express : Version 4.17.1,
